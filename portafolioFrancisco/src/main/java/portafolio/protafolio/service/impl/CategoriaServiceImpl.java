@@ -4,10 +4,7 @@
  */
 package portafolio.protafolio.service.impl;
 
-/**
- *
- * @author franf
- */
+
 import portafolio.protafolio.dao.CategoriaDao;
 import portafolio.protafolio.domain.Categoria;
 import portafolio.protafolio.service.CategoriaService;
@@ -18,27 +15,36 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
-    
+
     @Autowired
     private CategoriaDao categoriaDao;
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<Categoria> getCategorias(boolean activos) {
-        var lista=categoriaDao.findAll();
+        var lista = categoriaDao.findAll();
         if (activos) {
-           lista.removeIf(e -> !e.isActivo());
+            lista.removeIf(e -> !e.isActivo());
         }
         return lista;
     }
 
     @Override
-    public Object getCategorias(Categoria categoria) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    @Transactional(readOnly = true)
+    public Categoria getCategoria(Categoria categoria) {
+        return categoriaDao.findById(categoria.getIdCategoria()).orElse(null);
     }
 
     @Override
-    public Object getCategoria(Categoria categoria) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    @Transactional
+    public void save(Categoria categoria) {
+        categoriaDao.save(categoria);
     }
+
+    @Override
+    @Transactional
+    public void delete(Categoria categoria) {
+        categoriaDao.delete(categoria);
+    }
+
 }
