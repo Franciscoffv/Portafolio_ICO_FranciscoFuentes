@@ -17,5 +17,7 @@ public interface CategoriaService {
     public List<Categoria> getCategorias(boolean activos);
 
     public Object getCategorias(Categoria categoria);
+
+    public Object getCategoria(Categoria categoria);
  
 }
